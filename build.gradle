@@ -1,0 +1,47 @@
+apply plugin: 'java'
+
+sourceCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'app.Launcher'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    extraLibs
+}
+
+dependencies {
+    extraLibs group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.2'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.2', classifier: 'javadoc'
+
+    extraLibs 'org.greenrobot:eventbus:3.1.1'
+    compile 'org.greenrobot:eventbus:3.1.1'
+    compile 'org.greenrobot:eventbus:3.1.1:javadoc'
+    extraLibs group: 'com.google.guava', name: 'guava', version: '26.0-jre'
+    compile group: 'com.google.guava', name: 'guava', version: '26.0-jre'
+    compile group: 'com.google.guava', name: 'guava', version: '26.0-jre', classifier: 'javadoc'
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+}
+
+task copyRuntime(type: Copy) {
+    into file("${buildDir}/libs/lib/")
+    from configurations.extraLibs
+}
+  
+jar {
+
+    manifest {
+        attributes(
+        'Main-Class': 'app.Launcher',
+        "Class-Path": configurations.extraLibs.collect { 'lib/' + it.getName() }.join(' ')
+        )
+    }
+}
+
+jar.dependsOn copyRuntime
