@@ -7,10 +7,13 @@
 package app.actions;
 
 import app.Launcher;
+import app.ui.DocumentsDialog;
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -34,9 +37,10 @@ public class Actions {
     private static final AbstractAction aboutAction = new AbstractAction("About") {
         
         @Override
+        @SuppressWarnings("ResultOfObjectAllocationIgnored")
         public void actionPerformed(ActionEvent e) {
-            Launcher.getApplication().getController().getView().getSource();                    
-            JOptionPane.showMessageDialog(Launcher.getApplication().getController().getView().getSource(), "About");
+            final Component owner = Launcher.getApplication().getController().getView().getSource();                    
+            SwingUtilities.invokeLater(() -> { new DocumentsDialog((Frame) owner, true).setVisible(true); });
         }
         
     };
