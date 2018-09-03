@@ -1,11 +1,8 @@
-/*
- * Copyright 2018 Veeam Software.
- * 
- * Created by Maksim Khramov
- * Date: Aug 24, 2018.
- */
+
 package app;
 
+import app.controller.Controller;
+import app.model.Scene;
 import app.view.MainView;
 import java.util.logging.Logger;
 
@@ -18,7 +15,9 @@ public class GuiApplication extends GenericApplication {
 
     @Override
     public void run(String... args) {
-        MainView view = new MainView();
+        Controller controller = getController();
+        controller.bind(new Scene(), new MainView());
+        controller.bind(new Scene(), new MainView());
     }
 
     @Override

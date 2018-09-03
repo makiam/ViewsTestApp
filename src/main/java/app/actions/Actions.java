@@ -1,9 +1,4 @@
-/*
- * Copyright 2018 Veeam Software.
- * 
- * Created by Maksim Khramov
- * Date: Aug 29, 2018.
- */
+
 package app.actions;
 
 import app.Launcher;
@@ -29,7 +24,8 @@ public class Actions {
     private static final AbstractAction showDocumentsAction = new AbstractAction("Documents...") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Documents");
+            final Component owner = Launcher.getApplication().getController().getView().getSource();
+            SwingUtilities.invokeLater(() -> { new DocumentsDialog((Frame) owner, true).setVisible(true); });
         }
         
     };
@@ -39,8 +35,8 @@ public class Actions {
         @Override
         @SuppressWarnings("ResultOfObjectAllocationIgnored")
         public void actionPerformed(ActionEvent e) {
-            final Component owner = Launcher.getApplication().getController().getView().getSource();                    
-            SwingUtilities.invokeLater(() -> { new DocumentsDialog((Frame) owner, true).setVisible(true); });
+            final Component owner = Launcher.getApplication().getController().getView().getSource();
+            JOptionPane.showMessageDialog(owner, "About");
         }
         
     };

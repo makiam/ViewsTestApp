@@ -1,9 +1,4 @@
-/*
- * Copyright 2018 Veeam Software.
- * 
- * Created by Maksim Khramov
- * Date: Aug 24, 2018.
- */
+
 package app.controller;
 
 import app.model.Model;
@@ -11,6 +6,7 @@ import app.view.View;
 import app.view.events.ViewChangedEvent;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,13 +45,18 @@ public final class Controller {
     }
     
     public void add(Model model) {
-        System.out.println("add model to controller");
         mv.putIfAbsent(model, new ArrayList<>());
     }
     
+    public void bind(Model model, View view) {
+        List<View> vv = mv.putIfAbsent(model, Arrays.asList(view));
+        if(null == vv) return;
+        vv.add(view);
+    }
+    
+    
     @org.greenrobot.eventbus.Subscribe
     public final void onChangeViewEvent(ViewChangedEvent event) {
-        System.out.println("Recieve: " + event);
         view = event.getView();
         org.greenrobot.eventbus.EventBus.getDefault().cancelEventDelivery(event);
     }
