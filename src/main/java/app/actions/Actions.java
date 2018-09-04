@@ -2,13 +2,12 @@
 package app.actions;
 
 import app.Launcher;
-import app.ui.DocumentsDialog;
+import app.view.events.ShowDocumentsEvent;
 import java.awt.Component;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  *
@@ -24,8 +23,7 @@ public class Actions {
     private static final AbstractAction showDocumentsAction = new AbstractAction("Documents...") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            final Component owner = Launcher.getApplication().getController().getView().getSource();
-            SwingUtilities.invokeLater(() -> { new DocumentsDialog((Frame) owner, true).setVisible(true); });
+            EventBus.getDefault().post(new ShowDocumentsEvent());
         }
         
     };

@@ -17,7 +17,9 @@ public class GuiApplication extends GenericApplication {
     public void run(String... args) {
         Controller controller = getController();
         controller.bind(new Scene(), new MainView());
-        controller.bind(new Scene(), new MainView());
+        Scene scene = new Scene();
+        controller.bind(scene, new MainView());
+        controller.bind(scene, new MainView());
     }
 
     @Override

@@ -1,16 +1,23 @@
 
 package app.controller;
 
+import app.Launcher;
 import app.model.Model;
+import app.ui.DocumentsDialog;
 import app.view.View;
+import app.view.events.ShowDocumentsEvent;
 import app.view.events.ViewChangedEvent;
 import com.google.common.collect.ImmutableList;
+import java.awt.Component;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  *
@@ -48,16 +55,22 @@ public final class Controller {
         mv.putIfAbsent(model, new ArrayList<>());
     }
     
-    public void bind(Model model, View view) {
-        List<View> vv = mv.putIfAbsent(model, Arrays.asList(view));
+    public void bind(Model model, View view) {        
+        List<View> vv = mv.putIfAbsent(model, new ArrayList<>(Arrays.asList(view)));
         if(null == vv) return;
         vv.add(view);
     }
     
     
-    @org.greenrobot.eventbus.Subscribe
+    @Subscribe
     public final void onChangeViewEvent(ViewChangedEvent event) {
         view = event.getView();
-        org.greenrobot.eventbus.EventBus.getDefault().cancelEventDelivery(event);
+        EventBus.getDefault().cancelEventDelivery(event);
+    }
+    
+    @Subscribe
+    public final void onShowDocumentsEvent(ShowDocumentsEvent event) {
+        SwingUtilities.invokeLater(() -> { new DocumentsDialog((Frame)view.getSource(), true).setVisible(true); });
+        EventBus.getDefault().cancelEventDelivery(event);
     }
 }

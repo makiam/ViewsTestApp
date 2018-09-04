@@ -3,6 +3,7 @@ package app.ui;
 
 import app.Launcher;
 import app.model.Model;
+import app.view.View;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -25,10 +26,15 @@ public class DocumentsDialog extends javax.swing.JDialog {
         
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Views");
 
-        models.stream().map((model) -> { return new ModelTreeNode(model); }).forEach((node) -> { root.add(node); });
+        models.stream().map((model) -> { return new ModelTreeNode(model); }).forEach((node) -> { addModelNode(root, node); });
         viewsTree.setModel(new DefaultTreeModel(root));
     }
-
+    
+    private void addModelNode(DefaultMutableTreeNode root, ModelTreeNode pNode) {
+        List<View> views = Launcher.getApplication().getController().getViews((Model)pNode.getUserObject());
+        views.stream().map((view) -> { return new ViewTreeNode(view); }).forEach((node) -> { pNode.add(node); });
+        root.add(pNode);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,9 +96,10 @@ public class DocumentsDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void viewsTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewsTreeMouseClicked
-        if(evt.getClickCount() == 2) {            
+        final Object ct = viewsTree.getLastSelectedPathComponent();        
+        if(evt.getClickCount() == 2 && ct instanceof ViewTreeNode) {
             SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(DocumentsDialog.this, "Clicked on: " + viewsTree.getLastSelectedPathComponent());
+                JOptionPane.showMessageDialog(DocumentsDialog.this, "Clicked on: " + ((ViewTreeNode)ct).getUserObject());
             });
         }
         
@@ -115,10 +122,20 @@ public class DocumentsDialog extends javax.swing.JDialog {
     
     private class ViewTreeNode extends DefaultMutableTreeNode {
 
+        public ViewTreeNode(View view) {
+            super(view);
+        }
+        
         @Override
         public boolean getAllowsChildren() {
             return false;
         }
+
+        @Override
+        public String toString() {
+            return "ViewTreeNode{" + this.userObject + '}';
+        }
+        
 
     }
 }
