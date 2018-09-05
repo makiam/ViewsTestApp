@@ -25,7 +25,6 @@ public class AboutActionTest {
      */
     @Test
     public void testActionPerformed() {
-        System.out.println("actionPerformed");
         ActionEvent e = null;
         AbstractAction instance = Actions.getAboutAction();
         instance.actionPerformed(e);
