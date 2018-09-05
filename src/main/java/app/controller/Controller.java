@@ -1,7 +1,6 @@
 
 package app.controller;
 
-import app.Launcher;
 import app.model.Model;
 import app.ui.DocumentsDialog;
 import app.view.View;
@@ -9,7 +8,6 @@ import app.view.events.ShowDocumentsEvent;
 import app.view.events.ToggleViewEvent;
 import app.view.events.ViewChangedEvent;
 import com.google.common.collect.ImmutableList;
-import java.awt.Component;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Arrays;
