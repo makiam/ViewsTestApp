@@ -2,6 +2,7 @@
 package app.view;
 
 import app.actions.Actions;
+import app.model.Model;
 import app.view.events.ViewChangedEvent;
 import java.awt.Component;
 
@@ -39,6 +40,17 @@ public class MainView extends View {
     public void update() {
         
     }
+
+    @Override
+    public void setModel(Model model) {
+        super.setModel(model);
+        mainFrame.setTitle("Model: " + model);
+    }
+
+    @Override
+    public void activate() {
+        mainFrame.requestFocus();
+    }
     
     
     private class MainFrame extends JFrame implements WindowListener, WindowFocusListener {
@@ -72,15 +84,19 @@ public class MainView extends View {
             file.add(Actions.getExitAction());
             
             
+            
             view = mb.add(new JMenu("View"));
             view.add(Actions.getCloseAction());
+            view.add(Actions.getCloneAction());
             view.add(Actions.getShowDocumentsAction());
+            
             
             help = mb.add(new JMenu("Help"));
             help.add(new JSeparator());
             help.add(Actions.getAboutAction());
             
             this.setJMenuBar(mb);
+            this.setLocationByPlatform(true);
             this.setVisible(true);
         }
 

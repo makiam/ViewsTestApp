@@ -4,11 +4,13 @@ package app.ui;
 import app.Launcher;
 import app.model.Model;
 import app.view.View;
+import app.view.events.ToggleViewEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  *
@@ -98,8 +100,9 @@ public class DocumentsDialog extends javax.swing.JDialog {
     private void viewsTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewsTreeMouseClicked
         final Object ct = viewsTree.getLastSelectedPathComponent();        
         if(evt.getClickCount() == 2 && ct instanceof ViewTreeNode) {
+            dispose();
             SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(DocumentsDialog.this, "Clicked on: " + ((ViewTreeNode)ct).getUserObject());
+                EventBus.getDefault().post(new ToggleViewEvent((View)((ViewTreeNode)ct).getUserObject()));                
             });
         }
         

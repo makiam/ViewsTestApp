@@ -2,6 +2,8 @@
 package app.actions;
 
 import app.Launcher;
+import app.controller.Controller;
+import app.view.MainView;
 import app.view.events.ShowDocumentsEvent;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,14 @@ public class Actions {
     private Actions() {
     }
     
+    private static final AbstractAction cloneAction = new AbstractAction("Clone") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Controller controller = Launcher.getApplication().getController();
+            controller.bind(controller.getView().getModel(), new MainView());
+        }        
+    };
+            
     private static final AbstractAction showDocumentsAction = new AbstractAction("Documents...") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -70,4 +80,7 @@ public class Actions {
         return showDocumentsAction;
     }
     
+    public static AbstractAction getCloneAction() {
+        return cloneAction;
+    }
 }

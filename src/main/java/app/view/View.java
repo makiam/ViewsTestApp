@@ -23,5 +23,6 @@ public abstract class View {
         this.model = model;
     }
     
+    public abstract void activate();
     public abstract void update();
 }

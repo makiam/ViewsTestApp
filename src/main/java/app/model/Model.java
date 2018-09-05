@@ -31,5 +31,5 @@ public abstract class Model extends AXObject {
     protected String name;
     protected String description;
     
-    protected transient Optional<Path> path;
+    protected transient Optional<Path> path = Optional.empty();
 }

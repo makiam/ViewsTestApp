@@ -6,6 +6,7 @@ import app.model.Model;
 import app.ui.DocumentsDialog;
 import app.view.View;
 import app.view.events.ShowDocumentsEvent;
+import app.view.events.ToggleViewEvent;
 import app.view.events.ViewChangedEvent;
 import com.google.common.collect.ImmutableList;
 import java.awt.Component;
@@ -55,7 +56,8 @@ public final class Controller {
         mv.putIfAbsent(model, new ArrayList<>());
     }
     
-    public void bind(Model model, View view) {        
+    public void bind(Model model, View view) {   
+        view.setModel(model);
         List<View> vv = mv.putIfAbsent(model, new ArrayList<>(Arrays.asList(view)));
         if(null == vv) return;
         vv.add(view);
@@ -70,7 +72,14 @@ public final class Controller {
     
     @Subscribe
     public final void onShowDocumentsEvent(ShowDocumentsEvent event) {
-        SwingUtilities.invokeLater(() -> { new DocumentsDialog((Frame)view.getSource(), true).setVisible(true); });
         EventBus.getDefault().cancelEventDelivery(event);
+        SwingUtilities.invokeLater(() -> { new DocumentsDialog((Frame)view.getSource(), true).setVisible(true); });
+        
+    }
+    
+    @Subscribe 
+    public final void onToggeViewEvent(ToggleViewEvent event) {
+        EventBus.getDefault().cancelEventDelivery(event);
+        SwingUtilities.invokeLater(() -> { event.getView().activate(); });
     }
 }
