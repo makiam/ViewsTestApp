@@ -5,7 +5,6 @@ import app.actions.Actions;
 import app.model.Model;
 import app.view.events.ViewChangedEvent;
 import java.awt.Component;
-
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
@@ -21,19 +20,19 @@ import org.greenrobot.eventbus.EventBus;
  * @author maksim.khramov
  */
 public class MainView extends View {
-    private final JFrame mainFrame;
+    private final JFrame source;
 
     @Override
     public Component getSource() {
-        return mainFrame;
+        return source;
     }
     
     public JFrame getMainFrame() {
-        return mainFrame;
+        return source;
     }
     
     public MainView() {        
-        mainFrame = new MainFrame();
+        source = new MainFrame();
     }
 
     @Override
@@ -44,12 +43,12 @@ public class MainView extends View {
     @Override
     public void setModel(Model model) {
         super.setModel(model);
-        mainFrame.setTitle("Model: " + model);
+        source.setTitle("Model: " + model);
     }
 
     @Override
     public void activate() {
-        mainFrame.requestFocus();
+        source.requestFocus();
     }
     
     
@@ -60,8 +59,10 @@ public class MainView extends View {
         private JMenuBar mb;
         
         private JMenu file;
+        private JMenu edit;
         private JMenu view;
         private JMenu help;
+        private JMenu tools;
         
         public MainFrame() {
             super();
@@ -83,13 +84,14 @@ public class MainView extends View {
             file.addSeparator();
             file.add(Actions.getExitAction());
             
-            
+            edit = mb.add(new JMenu("Edit"));
             
             view = mb.add(new JMenu("View"));
             view.add(Actions.getCloseAction());
             view.add(Actions.getCloneAction());
             view.add(Actions.getShowDocumentsAction());
             
+            tools = mb.add(new JMenu("Tools"));
             
             help = mb.add(new JMenu("Help"));
             help.add(new JSeparator());
