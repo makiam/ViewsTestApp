@@ -5,9 +5,11 @@ import app.actions.Actions;
 import app.model.Model;
 import app.view.events.ViewChangedEvent;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
+import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,7 +23,8 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class MainView extends View {
     private final JFrame source;
-
+    private ScriptingConsoleView console;
+    
     @Override
     public Component getSource() {
         return source;
@@ -50,6 +53,10 @@ public class MainView extends View {
     public void activate() {
         source.requestFocus();
     }
+
+    @Override
+    public void close() {        
+    }
     
     
     private class MainFrame extends JFrame implements WindowListener, WindowFocusListener {
@@ -63,6 +70,7 @@ public class MainView extends View {
         private JMenu view;
         private JMenu help;
         private JMenu tools;
+        
         
         public MainFrame() {
             super();
@@ -92,7 +100,13 @@ public class MainView extends View {
             view.add(Actions.getShowDocumentsAction());
             
             tools = mb.add(new JMenu("Tools"));
-            
+            tools.add(new AbstractAction("Console") {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    MainView.this.console = new ScriptingConsoleView();
+                }
+                
+            });
             help = mb.add(new JMenu("Help"));
             help.add(new JSeparator());
             help.add(Actions.getAboutAction());

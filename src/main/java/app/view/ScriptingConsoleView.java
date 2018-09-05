@@ -9,12 +9,13 @@ package app.view;
 import java.awt.Component;
 import javax.swing.JFrame;
 import app.ui.ScriptingConsole;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author maksim.khramov
  */
-public class ScriptingConsoleView  extends View {
+public class ScriptingConsoleView  extends View implements Partial {
     
     private final JFrame source;
     
@@ -25,15 +26,23 @@ public class ScriptingConsoleView  extends View {
 
     @Override
     public void activate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     public ScriptingConsoleView() {
-        source = new ScriptingConsole();
+        source = new ScriptingConsole();            
+        SwingUtilities.invokeLater(() -> {
+            source.setVisible(true);
+        });
+    }
+
+    @Override
+    public void close() {
+        source.dispose();
     }
 }
