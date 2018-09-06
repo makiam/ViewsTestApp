@@ -91,6 +91,7 @@ public class MainView extends View {
             
             mb = new JMenuBar();
             file = mb.add(new JMenu("File"));
+            file.add(Actions.getNewDocumentAction());
             file.addSeparator();
             file.add(Actions.getExitAction());
             

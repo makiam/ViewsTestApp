@@ -3,8 +3,10 @@ package app.actions;
 
 import app.Launcher;
 import app.controller.Controller;
+import app.model.Scene;
 import app.view.MainView;
 import app.view.events.ShowDocumentsEvent;
+import app.view.events.ViewClosingEvent;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -17,11 +19,19 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class Actions {
 
-
+    private static final EventBus bus = EventBus.getDefault();
     
     private Actions() {
     }
-    
+    private static final AbstractAction newDocumentAction = new AbstractAction("New") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Controller controller = Launcher.getApplication().getController();
+            controller.bind(new Scene(), new MainView());            
+        }
+        
+    };
+            
     private static final AbstractAction cloneAction = new AbstractAction("Clone") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -33,7 +43,7 @@ public class Actions {
     private static final AbstractAction showDocumentsAction = new AbstractAction("Documents...") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            EventBus.getDefault().post(new ShowDocumentsEvent());
+            bus.post(new ShowDocumentsEvent());
         }
         
     };
@@ -52,7 +62,7 @@ public class Actions {
     private static final AbstractAction closeAction = new AbstractAction("Close") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Close View...");
+            bus.post(new ViewClosingEvent(Launcher.getApplication().getController().getView()));            
         }
         
     };
@@ -63,7 +73,11 @@ public class Actions {
             System.exit(0);
         }
     };
-            
+          
+    public static AbstractAction getNewDocumentAction() {
+        return newDocumentAction;
+    }
+    
     public static AbstractAction getExitAction() {
         return exitAction;
     }
