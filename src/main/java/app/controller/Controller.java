@@ -55,8 +55,16 @@ public final class Controller {
         return mv.getOrDefault(model, new ArrayList<>());
     }
     
-    public void add(Model model) {
+    public void add(Model model) {        
         mv.putIfAbsent(model, new ArrayList<>());
+    }
+    
+    public Model get(int index) {
+        return null;
+    }
+
+    public Model get(String name) {
+        return null;
     }
     
     public void bind(Model model, View view) {   
