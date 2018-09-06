@@ -8,6 +8,7 @@ import app.view.events.ShowDocumentsEvent;
 import app.view.events.ToggleViewEvent;
 import app.view.events.ViewChangedEvent;
 import app.view.events.ViewClosingEvent;
+import app.view.events.ViewModelLoadEvent;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
@@ -103,5 +104,11 @@ public final class Controller {
     public final void onToggeViewEvent(ToggleViewEvent event) {
         EventBus.getDefault().cancelEventDelivery(event);
         SwingUtilities.invokeLater(() -> { event.getView().activate(); });
+    }
+    
+    @Subscribe
+    public final void onViewModelLoadEvent(ViewModelLoadEvent event) {
+        EventBus.getDefault().cancelEventDelivery(event);
+        SwingUtilities.invokeLater(() -> { System.out.println("Load file..."); });
     }
 }

@@ -7,6 +7,7 @@ import app.model.Scene;
 import app.view.MainView;
 import app.view.events.ShowDocumentsEvent;
 import app.view.events.ViewClosingEvent;
+import app.view.events.ViewModelLoadEvent;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -23,6 +24,15 @@ public class Actions {
     
     private Actions() {
     }
+    
+    private static final AbstractAction openDocumentAction = new AbstractAction("Open") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            bus.post(new ViewModelLoadEvent(Launcher.getApplication().getController().getView()));
+        }
+        
+    };
+    
     private static final AbstractAction newDocumentAction = new AbstractAction("New") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -96,5 +106,9 @@ public class Actions {
     
     public static AbstractAction getCloneAction() {
         return cloneAction;
+    }
+    
+    public static AbstractAction getOpenAction() {
+        return openDocumentAction;
     }
 }
