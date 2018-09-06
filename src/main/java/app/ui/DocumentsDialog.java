@@ -33,7 +33,7 @@ public class DocumentsDialog extends javax.swing.JDialog {
     
     private void addModelNode(DefaultMutableTreeNode root, ModelTreeNode pNode) {
         List<View> views = Launcher.getApplication().getController().getViews((Model)pNode.getUserObject());
-        views.stream().map((view) -> { return new ViewTreeNode(view); }).forEach((node) -> { pNode.add(node); });
+        views.stream().filter(view -> view != null).map((view) -> { return new ViewTreeNode(view); }).forEach((node) -> { pNode.add(node); });
         root.add(pNode);
     }
     /**

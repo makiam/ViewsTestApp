@@ -7,7 +7,11 @@ import app.view.View;
 import app.view.events.ShowDocumentsEvent;
 import app.view.events.ToggleViewEvent;
 import app.view.events.ViewChangedEvent;
+import app.view.events.ViewClosingEvent;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
+
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +35,7 @@ public final class Controller {
     }
     
     private final Map<Model, List<View>> mv = new HashMap<>();
+    private final Multimap<Model, View> mmv = ArrayListMultimap.create();
     
     private final Map<String, Model> nameToModel =  new HashMap<>();
     
@@ -64,8 +69,19 @@ public final class Controller {
     
     @Subscribe
     public final void onChangeViewEvent(ViewChangedEvent event) {
-        view = event.getView();
         EventBus.getDefault().cancelEventDelivery(event);
+        view = event.getView();
+    }
+    
+    @Subscribe
+    public final void onViewClosingEvent(ViewClosingEvent event) {
+        EventBus.getDefault().cancelEventDelivery(event);
+        view = event.getView();
+        Model model = view.getModel();
+        if(mv.containsKey(model)) {
+            mv.get(model).remove(view);            
+            SwingUtilities.invokeLater(() -> { view.close(); });
+        }
     }
     
     @Subscribe

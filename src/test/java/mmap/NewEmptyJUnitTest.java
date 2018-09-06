@@ -1,16 +1,12 @@
-/*
- * Copyright 2018 Veeam Software.
- * 
- * Created by Maksim Khramov
- * Date: Sep 5, 2018.
- */
+
 
 package mmap;
 
 import app.model.Model;
+import app.model.Scene;
 import app.view.View;
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import java.util.Collection;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,7 +26,14 @@ public class NewEmptyJUnitTest {
     
     @Test
     public void testMMap() {
-        Multimap<Model, View> mmap = ArrayListMultimap.create();
+        Multimap<Model, View> mmap = com.google.common.collect.HashMultimap.create();
+        Model scene  = new Scene();
+        mmap.put(scene, null);
+
+        Collection<View> views = mmap.get(scene);
+        System.out.println(views.size());
+        
+        views.forEach(System.out::println);
         
     }
 }

@@ -4,6 +4,7 @@ package app.view;
 import app.actions.Actions;
 import app.model.Model;
 import app.view.events.ViewChangedEvent;
+import app.view.events.ViewClosingEvent;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -55,7 +56,8 @@ public class MainView extends View {
     }
 
     @Override
-    public void close() {        
+    public void close() {
+        source.dispose();
     }
     
     
@@ -127,7 +129,7 @@ public class MainView extends View {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            this.dispose();
+            bus.post(new ViewClosingEvent(MainView.this));
         }
 
         @Override

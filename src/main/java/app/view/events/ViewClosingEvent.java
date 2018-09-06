@@ -7,9 +7,9 @@ import app.view.View;
  *
  * @author maksim.khramov
  */
-public class ViewClosedEvent extends ViewEvent {
+public class ViewClosingEvent extends ViewEvent {
     
-    public ViewClosedEvent(View view) {
+    public ViewClosingEvent(View view) {
         super(view);
     }
 }
