@@ -3,18 +3,18 @@ package app.view;
 
 import app.actions.Actions;
 import app.model.Model;
-import app.view.events.ViewChangedEvent;
 import app.view.events.ViewClosingEvent;
+import app.view.events.ViewChangedEvent;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
+import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import org.greenrobot.eventbus.EventBus;
 
@@ -61,10 +61,11 @@ public class MainView extends View {
     }
     
     
-    private class MainFrame extends JFrame implements WindowListener, WindowFocusListener {
+    private class MainFrame extends JFrame implements WindowListener {
         
         private org.greenrobot.eventbus.EventBus bus;
         
+        private JToolBar tb;
         private JMenuBar mb;
         
         private JMenu file;
@@ -87,7 +88,13 @@ public class MainView extends View {
             this.setSize(800,600);
             this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             this.addWindowListener(this);
-            this.addWindowFocusListener(this);
+            
+            tb = new JToolBar(JToolBar.HORIZONTAL);
+            tb.add(Actions.getNewDocumentAction());
+            tb.add(Actions.getOpenAction());
+            tb.add(Actions.getCloseAction());
+            tb.add(Actions.getCloneAction());
+            tb.add(Actions.getShowDocumentsAction());
             
             mb = new JMenuBar();
             file = mb.add(new JMenu("File"));
@@ -114,7 +121,7 @@ public class MainView extends View {
             help = mb.add(new JMenu("Help"));
             help.add(new JSeparator());
             help.add(Actions.getAboutAction());
-            
+            this.add(tb);
             this.setJMenuBar(mb);
             this.setLocationByPlatform(true);
             this.setVisible(true);
@@ -148,24 +155,13 @@ public class MainView extends View {
 
         @Override
         public void windowActivated(WindowEvent e) {
-            
+            bus.post(new ViewChangedEvent(MainView.this));
         }
 
         @Override
         public void windowDeactivated(WindowEvent e) {
         }
 
-        @Override
-        public void windowGainedFocus(WindowEvent e) {
-            bus.post(new ViewChangedEvent(MainView.this));
-        }
-
-        @Override
-        public void windowLostFocus(WindowEvent e) {
-        }
-        
-        
-        
     }
     
 }
