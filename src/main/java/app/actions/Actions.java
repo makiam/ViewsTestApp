@@ -11,6 +11,7 @@ import app.view.events.ViewModelLoadEvent;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,6 +24,19 @@ public class Actions {
     private static final EventBus bus = EventBus.getDefault();
     
     private Actions() {
+    }
+    
+    private static final AbstractAction toggleMenuAction = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            final JFrame owner = (JFrame)Launcher.getApplication().getController().getView().getSource();
+            owner.getJMenuBar().setVisible(false);
+        }
+        
+    };
+
+    public static AbstractAction getToggleMenuAction() {
+        return toggleMenuAction;
     }
     
     private static final AbstractAction openDocumentAction = new AbstractAction("Open") {
