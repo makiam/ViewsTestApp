@@ -7,6 +7,7 @@ import app.view.events.ViewClosingEvent;
 import app.view.events.ViewChangedEvent;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.AbstractAction;
@@ -15,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 import org.greenrobot.eventbus.EventBus;
 
@@ -63,6 +65,8 @@ public class MainView extends View {
     
     private class MainFrame extends JFrame implements WindowListener {
         
+        final KeyStroke escStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0);
+        
         private org.greenrobot.eventbus.EventBus bus;
         
         private JToolBar tb;
@@ -89,7 +93,10 @@ public class MainView extends View {
             this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             this.addWindowListener(this);
             
+            
             tb = new JToolBar(JToolBar.HORIZONTAL);
+            tb.setRollover(true);
+            
             tb.add(Actions.getNewDocumentAction());
             tb.add(Actions.getOpenAction());
             tb.add(Actions.getCloseAction());
@@ -116,13 +123,14 @@ public class MainView extends View {
                 public void actionPerformed(ActionEvent e) {
                     MainView.this.console = new ScriptingConsoleView();
                 }
-                
+
             });
             help = mb.add(new JMenu("Help"));
             help.add(new JSeparator());
             help.add(Actions.getAboutAction());
             this.add(tb);
             this.setJMenuBar(mb);
+            
             this.setLocationByPlatform(true);
             this.setVisible(true);
         }
