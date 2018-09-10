@@ -2,6 +2,7 @@
 package app;
 
 import app.controller.Controller;
+import app.model.Model;
 import app.model.Scene;
 import app.view.MainView;
 import java.util.logging.Logger;
@@ -17,7 +18,7 @@ public class GuiApplication extends GenericApplication {
     public void run(String... args) {
         Controller controller = getController();
         controller.bind(new Scene(), new MainView());
-        Scene scene = new Scene();
+        Model scene = new Scene();
         controller.bind(scene, new MainView());
         controller.bind(scene, new MainView());
     }

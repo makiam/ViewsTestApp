@@ -3,6 +3,8 @@ package app;
 
 import app.controller.Controller;
 import app.model.Model;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
@@ -33,6 +35,11 @@ public abstract class GenericApplication implements Application {
         System.out.println(controller.getModels().size());
         return controller.getModels();
     }
+    public Model open(String path) {
+        Path modelPath = Paths.get(path);
+        return null;
+    }
+    
     
     public void add(Model model) {
         System.out.println("do add model");

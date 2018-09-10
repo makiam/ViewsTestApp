@@ -111,6 +111,9 @@ public class MainView extends View {
             file.add(Actions.getExitAction());
             
             edit = mb.add(new JMenu("Edit"));
+            edit.add(Actions.getCutAction());
+            edit.add(Actions.getCopyAction());
+            edit.add(Actions.getPasteAction());
             
             view = mb.add(new JMenu("View"));
             view.add(Actions.getCloseAction());

@@ -1,6 +1,7 @@
 
 package app.model;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -32,4 +33,8 @@ public abstract class Model extends AXObject {
     protected String description;
     
     protected transient Optional<Path> path = Optional.empty();
+    
+//    public Model(File source) {
+//        this.path = Optional.of(source.toPath());
+//    }
 }
