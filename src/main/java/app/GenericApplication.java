@@ -3,6 +3,8 @@ package app;
 
 import app.controller.Controller;
 import app.model.Model;
+import app.model.Scene;
+import app.view.MainView;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -38,7 +40,9 @@ public abstract class GenericApplication implements Application {
     
     public Model open(String path) {
         Path modelPath = Paths.get(path);
-        return null;
+        Model model = new Scene(modelPath);
+        controller.add(model);
+        return model;
     }
     
     

@@ -14,6 +14,8 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import lombok.Getter;
+
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -28,15 +30,16 @@ public class Actions {
     private Actions() {
     }
     
+    @Getter
     private static final AbstractAction cutAction = new AbstractAction("Cut", new ImageIcon(Actions.class.getResource("/icons/cut.png"))) {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            
         }
         
     };
     
+    @Getter
     private static final AbstractAction copyAction = new AbstractAction("Copy", new ImageIcon(Actions.class.getResource("/icons/copy.png"))) {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -45,13 +48,14 @@ public class Actions {
         
     };
     
+    @Getter
     private static final AbstractAction pasteAction = new AbstractAction("Paste", new ImageIcon(Actions.class.getResource("/icons/paste.png"))) {
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-        }
-        
+        } 
     };
+    
+    @Getter
     private static final AbstractAction toggleMenuAction = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -60,11 +64,8 @@ public class Actions {
         }
         
     };
-
-    public static AbstractAction getToggleMenuAction() {
-        return toggleMenuAction;
-    }
     
+    @Getter()
     private static final AbstractAction openDocumentAction = new AbstractAction("Open") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -73,6 +74,7 @@ public class Actions {
         
     };
     
+    @Getter
     private static final AbstractAction newDocumentAction = new AbstractAction("New") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -81,7 +83,8 @@ public class Actions {
         }
         
     };
-            
+           
+    @Getter
     private static final AbstractAction cloneAction = new AbstractAction("Clone") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -89,7 +92,8 @@ public class Actions {
             controller.bind(controller.getView().getModel(), new MainView());
         }        
     };
-            
+    
+    @Getter
     private static final AbstractAction showDocumentsAction = new AbstractAction("Documents...") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -98,6 +102,7 @@ public class Actions {
         
     };
     
+    @Getter
     private static final AbstractAction aboutAction = new AbstractAction("About") {
         
         @Override
@@ -108,7 +113,8 @@ public class Actions {
         }
         
     };
-            
+    
+    @Getter
     private static final AbstractAction closeAction = new AbstractAction("Close") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -116,52 +122,13 @@ public class Actions {
         }
         
     };
-            
+    
+    @Getter 
     private static final AbstractAction exitAction = new AbstractAction("Exit") {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
     };
-          
-    public static AbstractAction getNewDocumentAction() {
-        return newDocumentAction;
-    }
-    
-    public static AbstractAction getExitAction() {
-        return exitAction;
-    }
 
-    public static AbstractAction getCloseAction() {
-        return closeAction;
-    }
-
-    public static AbstractAction getAboutAction() {
-        return aboutAction;
-    }
-
-    public static final AbstractAction getShowDocumentsAction() {
-        return showDocumentsAction;
-    }
-    
-    public static AbstractAction getCloneAction() {
-        return cloneAction;
-    }
-    
-    public static AbstractAction getOpenAction() {
-        return openDocumentAction;
-    }
-    
-    public static final AbstractAction getCutAction() {
-        return cutAction;
-    }
-
-    public static final AbstractAction getCopyAction() {
-        return copyAction;
-    }
-
-    public static final AbstractAction getPasteAction() {
-        return pasteAction;
-    }
-   
 }

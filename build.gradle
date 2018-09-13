@@ -1,5 +1,11 @@
-apply plugin: 'java'
-apply plugin: "jacoco"
+//apply plugin: 'java'
+//apply plugin: "jacoco"
+
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'net.ltgt.apt' version '0.10'
+}
 
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -11,6 +17,7 @@ if (!hasProperty('mainClass')) {
 
 repositories {
     mavenCentral()
+    maven { url 'https://projectlombok.org/edge-releases' }
 }
 
 configurations {
@@ -20,7 +27,9 @@ configurations {
 dependencies {
     extraLibs group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.2'
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.2', classifier: 'javadoc'
-
+    compileOnly 'org.projectlombok:lombok:edge-SNAPSHOT'
+    apt 'org.projectlombok:lombok:edge-SNAPSHOT'
+    
     extraLibs 'org.greenrobot:eventbus:3.1.1'
     compile 'org.greenrobot:eventbus:3.1.1'
     compile 'org.greenrobot:eventbus:3.1.1:javadoc'

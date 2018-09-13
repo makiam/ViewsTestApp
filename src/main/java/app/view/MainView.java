@@ -98,7 +98,7 @@ public class MainView extends View {
             tb.setRollover(true);
             
             tb.add(Actions.getNewDocumentAction());
-            tb.add(Actions.getOpenAction());
+            tb.add(Actions.getOpenDocumentAction());
             tb.add(Actions.getCloseAction());
             tb.add(Actions.getCloneAction());
             tb.add(Actions.getShowDocumentsAction());
@@ -106,7 +106,7 @@ public class MainView extends View {
             mb = new JMenuBar();
             file = mb.add(new JMenu("File"));
             file.add(Actions.getNewDocumentAction());
-            file.add(Actions.getOpenAction());
+            file.add(Actions.getOpenDocumentAction());
             file.addSeparator();
             file.add(Actions.getExitAction());
             
