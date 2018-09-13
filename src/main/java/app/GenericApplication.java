@@ -35,6 +35,7 @@ public abstract class GenericApplication implements Application {
         System.out.println(controller.getModels().size());
         return controller.getModels();
     }
+    
     public Model open(String path) {
         Path modelPath = Paths.get(path);
         return null;

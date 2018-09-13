@@ -2,7 +2,9 @@
 package app.controller;
 
 import app.model.Model;
+import app.model.Scene;
 import app.ui.DocumentsDialog;
+import app.view.MainView;
 import app.view.View;
 import app.view.events.ShowDocumentsEvent;
 import app.view.events.ToggleViewEvent;
@@ -19,7 +21,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -28,6 +32,8 @@ import org.greenrobot.eventbus.Subscribe;
  * @author maksim.khramov
  */
 public final class Controller {
+    
+    private static final FileNameExtensionFilter filter = new FileNameExtensionFilter("AOI Scene", "aoi");
     
     private View view = null;
 
@@ -109,6 +115,14 @@ public final class Controller {
     @Subscribe
     public final void onViewModelLoadEvent(ViewModelLoadEvent event) {
         EventBus.getDefault().cancelEventDelivery(event);
-        SwingUtilities.invokeLater(() -> { System.out.println("Load file..."); });
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(filter);
+        
+        SwingUtilities.invokeLater(() -> {
+            int result = chooser.showOpenDialog(view.getSource());
+            if(JFileChooser.APPROVE_OPTION == result) {                
+                bind(new Scene(chooser.getSelectedFile().toPath()), new MainView());
+            }
+        });
     }
 }
