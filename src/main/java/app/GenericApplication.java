@@ -33,8 +33,6 @@ public abstract class GenericApplication implements Application {
     
     
     public List<Model> getModels() {
-        System.out.println("get models...");
-        System.out.println(controller.getModels().size());
         return controller.getModels();
     }
     
@@ -52,8 +50,7 @@ public abstract class GenericApplication implements Application {
     }
     
     public GenericApplication() {
-        engine = new javax.script.ScriptEngineManager().getEngineByName("groovy");
-        
+        engine = new javax.script.ScriptEngineManager().getEngineByName("groovy");        
         init();
     }
     private void init() {
