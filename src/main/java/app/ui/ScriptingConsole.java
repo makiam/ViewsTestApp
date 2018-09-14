@@ -2,8 +2,9 @@
 package app.ui;
 
 import app.Launcher;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.script.ScriptException;
 import lombok.extern.java.Log;
 
@@ -14,6 +15,22 @@ import lombok.extern.java.Log;
 
 @Log
 public class ScriptingConsole extends javax.swing.JFrame {
+    
+    private final Writer consoleWriter = new Writer() {
+        
+        @Override
+        public void write(char[] cbuf, int off, int len) throws IOException {            
+        }
+
+        @Override
+        public void flush() throws IOException {            
+        }
+
+        @Override
+        public void close() throws IOException {
+        }
+        
+    };
     
     /**
      * Creates new form ScriptingConsole
@@ -38,6 +55,9 @@ public class ScriptingConsole extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -85,7 +105,6 @@ public class ScriptingConsole extends javax.swing.JFrame {
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
         try {
-            // TODO add your handling code here:
             Launcher.getApplication().getEngine().eval(jTextArea1.getText());
         } catch (ScriptException ex) {
             
@@ -93,6 +112,11 @@ public class ScriptingConsole extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_runButtonActionPerformed
 
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        
+    }//GEN-LAST:event_formWindowActivated
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
