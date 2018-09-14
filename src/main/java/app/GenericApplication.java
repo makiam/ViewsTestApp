@@ -4,7 +4,6 @@ package app;
 import app.controller.Controller;
 import app.model.Model;
 import app.model.Scene;
-import app.view.MainView;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -20,6 +19,7 @@ public abstract class GenericApplication implements Application {
     
     protected ScriptEngine engine;
 
+    @Override
     public ScriptEngine getEngine() {
         return engine;
     }

@@ -1,12 +1,20 @@
 
 package app.ui;
 
+import app.Launcher;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.script.ScriptException;
+import lombok.extern.java.Log;
+
 /**
  *
  * @author maksim.khramov
  */
-public class ScriptingConsole extends javax.swing.JFrame {
 
+@Log
+public class ScriptingConsole extends javax.swing.JFrame {
+    
     /**
      * Creates new form ScriptingConsole
      */
@@ -41,9 +49,15 @@ public class ScriptingConsole extends javax.swing.JFrame {
         runButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         runButton.setLabel("Run");
         runButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        runButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runButtonActionPerformed(evt);
+            }
+        });
         jToolBar1.add(runButton);
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 13)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -68,6 +82,16 @@ public class ScriptingConsole extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            Launcher.getApplication().getEngine().eval(jTextArea1.getText());
+        } catch (ScriptException ex) {
+            
+            log.log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_runButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

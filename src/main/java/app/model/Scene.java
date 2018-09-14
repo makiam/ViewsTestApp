@@ -19,4 +19,12 @@ public class Scene extends Library {
         this();
         this.path = Optional.of(source);
     }
+
+    @Override
+    public String toString() {
+        System.out.println("Scene toString();");
+        return "Scene{" + name +'}';
+    }
+    
+    
 }
