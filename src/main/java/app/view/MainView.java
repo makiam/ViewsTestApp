@@ -3,6 +3,7 @@ package app.view;
 
 import app.actions.Actions;
 import app.model.Model;
+import app.model.events.SelectionChangedEvent;
 import app.view.events.ViewClosingEvent;
 import app.view.events.ViewChangedEvent;
 import java.awt.Component;
@@ -14,17 +15,20 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  *
  * @author maksim.khramov
  */
-public class MainView extends View {
+public class MainView extends View implements SelectionChangeListener {
     private final JFrame source;
     private ScriptingConsoleView console;
     
@@ -37,7 +41,8 @@ public class MainView extends View {
         return source;
     }
     
-    public MainView() {        
+    public MainView() { 
+        EventBus.getDefault().register(this);
         source = new MainFrame();
     }
 
@@ -60,6 +65,14 @@ public class MainView extends View {
     @Override
     public void close() {
         source.dispose();
+    }
+
+    @Override
+    @Subscribe
+    public void onSelectionChangeEvent(SelectionChangedEvent event) {
+        if(event.getModel() == this.getModel()) {
+            SwingUtilities.invokeLater(() -> { JOptionPane.showMessageDialog(null, "Selection Changed..."); });
+        }
     }
     
     
@@ -124,7 +137,8 @@ public class MainView extends View {
             tools.add(new AbstractAction("Console") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    MainView.this.console = new ScriptingConsoleView();
+                    //MainView.this.console = new ScriptingConsoleView();
+                    bus.post(new SelectionChangedEvent(MainView.this.getModel()));
                 }
 
             });

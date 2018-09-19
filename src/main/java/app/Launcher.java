@@ -2,6 +2,7 @@ package app;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -23,11 +24,12 @@ public class Launcher {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IllegalAccessException, UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException {
+        Thread.setDefaultUncaughtExceptionHandler(eh);
         ClassLoader cl = ClassLoader.getSystemClassLoader();
         System.out.println(cl);
         
         
-        Thread.setDefaultUncaughtExceptionHandler(eh);
+        
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         app = new GuiApplication();
         app.run(args);
@@ -36,8 +38,9 @@ public class Launcher {
     static Thread.UncaughtExceptionHandler eh = new Thread.UncaughtExceptionHandler() {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
-            e.printStackTrace();
-            System.out.println("Execution Exception " + e + " catched from: " + t);
+            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+            //e.printStackTrace();
+            //System.out.println("Execution Exception " + e + " catched from: " + t);
         }
     };
 }

@@ -5,6 +5,7 @@ import app.Launcher;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.logging.Level;
+import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import lombok.extern.java.Log;
 
@@ -104,10 +105,12 @@ public class ScriptingConsole extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
+        final ScriptEngine engine = Launcher.getApplication().getEngine();
+        Writer writer = engine.getContext().getWriter();
         try {
-            Launcher.getApplication().getEngine().eval(jTextArea1.getText());
+            engine.eval(jTextArea1.getText());
         } catch (ScriptException ex) {
-            
+            jTextArea1.append(ex.getMessage());
             log.log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_runButtonActionPerformed
