@@ -8,7 +8,7 @@ import app.model.AXObject;
  *
  * @author maksim.khramov
  */
-public interface Selection {
+public interface SelectionOwner {
     public AXList getSelection();
     
     public void setSelection(AXList selection);

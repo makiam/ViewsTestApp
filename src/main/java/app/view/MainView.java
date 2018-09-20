@@ -2,6 +2,8 @@
 package app.view;
 
 import app.actions.Actions;
+import app.model.AXList;
+import app.model.AXObject;
 import app.model.Model;
 import app.model.events.SelectionChangedEvent;
 import app.view.events.ViewClosingEvent;
@@ -28,9 +30,11 @@ import org.greenrobot.eventbus.Subscribe;
  *
  * @author maksim.khramov
  */
-public class MainView extends View implements SelectionChangeListener {
+public class MainView extends View implements SelectionChangeListener, SelectionOwner {
     private final JFrame source;
     private ScriptingConsoleView console;
+    
+    private AXList selection = new AXList();
     
     @Override
     public Component getSource() {
@@ -73,6 +77,26 @@ public class MainView extends View implements SelectionChangeListener {
         if(event.getModel() == this.getModel()) {
             SwingUtilities.invokeLater(() -> { JOptionPane.showMessageDialog(null, "Selection Changed..."); });
         }
+    }
+
+    @Override
+    public AXList getSelection() {
+        return selection;
+    }
+
+    @Override
+    public void setSelection(AXList selection) {
+        this.selection = selection;
+    }
+
+    @Override
+    public void add(AXObject item) {
+        selection.add(item);
+    }
+
+    @Override
+    public void remove(AXObject item) {
+        selection.remove(item);
     }
     
     
