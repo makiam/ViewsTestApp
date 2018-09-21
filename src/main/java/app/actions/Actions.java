@@ -4,6 +4,7 @@ package app.actions;
 import app.Launcher;
 import app.controller.Controller;
 import app.model.Scene;
+import app.ui.OptionsDialog;
 import app.view.MainView;
 import app.view.events.ShowDocumentsEvent;
 import app.view.events.ViewClosingEvent;
@@ -14,6 +15,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import lombok.Getter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,6 +32,15 @@ public class Actions {
     private Actions() {
     }
     
+    @Getter
+    private static final AbstractAction optionsDialogAction = new AbstractAction("Options") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            final JFrame owner = (JFrame)Launcher.getApplication().getController().getView().getSource();
+            SwingUtilities.invokeLater(() -> { new OptionsDialog(owner, true).setVisible(true); });
+        }
+            
+    };
     @Getter
     private static final AbstractAction cutAction = new AbstractAction("Cut", new ImageIcon(Actions.class.getResource("/icons/cut.png"))) {
         

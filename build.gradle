@@ -39,6 +39,7 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '26.0-jre', classifier: 'sources'
     testCompile group: 'junit', name: 'junit', version: '4.10'
     testCompile group: 'org.assertj', name: 'assertj-swing-junit', version: '3.8.0'
+    testCompile("org.assertj:assertj-core:3.11.1")
 }
 
 task copyRuntime(type: Copy) {

@@ -151,6 +151,8 @@ public class MainView extends View implements SelectionChangeListener, Selection
             edit.add(Actions.getCutAction());
             edit.add(Actions.getCopyAction());
             edit.add(Actions.getPasteAction());
+            edit.add(new JSeparator());
+            edit.add(Actions.getOptionsDialogAction());
             
             view = mb.add(new JMenu("View"));
             view.add(Actions.getCloseAction());
