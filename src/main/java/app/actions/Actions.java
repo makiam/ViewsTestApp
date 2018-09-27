@@ -71,7 +71,7 @@ public class Actions {
         @Override
         public void actionPerformed(ActionEvent e) {
             final JFrame owner = (JFrame)Launcher.getApplication().getController().getView().getSource();
-            owner.getJMenuBar().setVisible(owner.getJMenuBar().isVisible());
+            owner.getJMenuBar().setVisible(!owner.getJMenuBar().isVisible());            
         }
         
     };
